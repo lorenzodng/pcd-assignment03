@@ -6,22 +6,19 @@ package pcd.ass01;
  * objects are completely state-less
  *
  */
-public record P2d(double x, double y) {
+//rappresenta un punto in uno spazio bidimensionale
+public record P2d(double x, double y) { //"record" indica che le variabili non possono essere modificate una volta definite
 
-
+    //calcola un nuovo punto
     public P2d sum(V2d v){
-        return new P2d(x+v.x(),y+v.y());
+        return new P2d(x + v.x(),y + v.y()); //restituisce un nuovo punto sommando le coordinate correnti con quelle di un vettore V2d
     }
 
-    public V2d sub(P2d v){
-        return new V2d(x-v.x,y-v.y);
-    }
-    
+    //calcola la distanza tra due punti nello spazio
     public double distance(P2d p) {
     	double dx = p.x - x;
     	double dy = p.y - y;
     	return Math.sqrt(dx*dx + dy*dy);
-
     }
     
     public String toString(){
