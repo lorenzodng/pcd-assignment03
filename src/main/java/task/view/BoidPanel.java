@@ -1,8 +1,7 @@
-package multithreading.view;
+package task.view;
 
-import multithreading.model.Boid;
-import multithreading.model.BoidManager;
-
+import task.model.Boid;
+import task.model.BoidManager;
 import javax.swing.*;
 import java.awt.*;
 
@@ -25,13 +24,11 @@ public class BoidPanel extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         setBackground(Color.WHITE);
-        
         var w = view.getWidth();
         var h = view.getHeight();
         var envWidth = model.getWidth();
         var xScale = w/envWidth;
         var boids = model.getBoids();
-
         g.setColor(Color.BLUE);
         for (Boid boid : boids) {
         	var x = boid.getPos().x();
@@ -39,9 +36,7 @@ public class BoidPanel extends JPanel {
         	int px = (int)(w/2 + (x * xScale));
         	int py = (int)(h/2 - (y * xScale));
             g.fillOval(px,py, 5, 5);
-
         }
-
         g.setColor(Color.BLACK);
         g.drawString("Framerate: " + framerate, 10, 25);
    }

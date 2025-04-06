@@ -1,8 +1,7 @@
-package multithreading.view;
+package threads.view;
 
-import multithreading.controller.BoidController;
-import multithreading.model.BoidManager;
-
+import threads.controller.BoidController;
+import threads.model.BoidManager;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -26,24 +25,18 @@ public class BoidView extends JFrame implements ChangeListener {
 		this.controller= controller;
 		this.width = width;
 		this.height = height;
-
         frame = new JFrame("Boids Simulation");
         frame.setSize(width, height);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
 		JPanel cp = new JPanel();
 		LayoutManager layout = new BorderLayout();
 		cp.setLayout(layout);
-
         boidsPanel = new BoidPanel(this, boidManager);
 		cp.add(BorderLayout.CENTER, boidsPanel);
-
         JPanel slidersPanel = new JPanel();
-
         cohesionSlider = makeSlider();
         separationSlider = makeSlider();
         alignmentSlider = makeSlider();
-
         slidersPanel.add(new JLabel("Separation"));
         slidersPanel.add(separationSlider);
         slidersPanel.add(new JLabel("Alignment"));
@@ -51,37 +44,29 @@ public class BoidView extends JFrame implements ChangeListener {
         slidersPanel.add(new JLabel("Cohesion"));
         slidersPanel.add(cohesionSlider);
 		cp.add(BorderLayout.SOUTH, slidersPanel);
-
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.X_AXIS));
-
-		boidsSpinner = new JSpinner(new SpinnerNumberModel(500, 1, 1000, 1));
+		boidsSpinner = new JSpinner(new SpinnerNumberModel(500, 1, 5000, 1));
 		JPanel spinnerPanel = new JPanel();
 		spinnerPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		spinnerPanel.add(new JLabel("Boids:"));
 		spinnerPanel.add(boidsSpinner);
 		mainPanel.add(spinnerPanel);
-
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		startButton = new JButton("Start");
 		stopButton = new JButton("Stop");
 		resetButton = new JButton("Reset");
 		mainPanel.add(buttonPanel);
-
 		cp.add(BorderLayout.NORTH, mainPanel);
-
 		startButton.addActionListener(this::startSimulation);
 		stopButton.addActionListener(this::stopSimulation);
 		resetButton.addActionListener(this::resetSimulation);
-
 		stopButton.setEnabled(false);
 		resetButton.setEnabled(false);
-
 		buttonPanel.add(startButton);
 		buttonPanel.add(stopButton);
 		buttonPanel.add(resetButton);
-
 		frame.setContentPane(cp);
 	}
 
@@ -109,7 +94,7 @@ public class BoidView extends JFrame implements ChangeListener {
 	}
 
 	@Override
-	public void stateChanged(ChangeEvent e) {
+	public synchronized void stateChanged(ChangeEvent e) {
 		if (e.getSource() == separationSlider) {
 			var val = separationSlider.getValue();
 			boidManager.setSeparationWeight(0.1*val);
@@ -127,7 +112,7 @@ public class BoidView extends JFrame implements ChangeListener {
 		if(getBoidManager().getBoids().isEmpty()){
 			getBoidManager().createBoids(numBoids);
 		}
-		controller.startSimulation(this);
+		controller.start(this);
 		startButton.setEnabled(false);
 		stopButton.setEnabled(true);
 		resetButton.setEnabled(false);
@@ -135,19 +120,17 @@ public class BoidView extends JFrame implements ChangeListener {
 	}
 
 	private void stopSimulation(ActionEvent e) {
-		controller.stopSimulation();
+		controller.stop();
 		startButton.setEnabled(true);
 		stopButton.setEnabled(false);
 		resetButton.setEnabled(true);
 		boidsSpinner.setEnabled(false);
-		System.out.println("Threads terminated, boids active");
 	}
 
 	private void resetSimulation(ActionEvent e) {
-		controller.resetSimulation(getBoidManager());
+		controller.reset(getBoidManager());
 		boidsPanel.repaint();
 		boidsSpinner.setEnabled(true);
-		System.out.println("Threads terminated, boids deleted");
 	}
 
 	public void display() {

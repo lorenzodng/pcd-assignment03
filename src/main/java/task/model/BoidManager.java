@@ -1,18 +1,12 @@
-package multithreading.model;
-
-import multithreading.controller.BoidSimulationManager;
-import multithreading.controller.BoidThread;
+package task.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 public class BoidManager {
     
     private final List<Boid> boids;
-    private final List<BoidThread> threads;
-    private double separationWeight; 
+    private double separationWeight;
     private double alignmentWeight; 
     private double cohesionWeight; 
     private final double width;
@@ -21,14 +15,7 @@ public class BoidManager {
     private final double perceptionRadius;
     private final double avoidRadius;
 
-    public BoidManager(double initialSeparationWeight,
-                       double initialAlignmentWeight,
-                       double initialCohesionWeight,
-                       double width,
-                       double height,
-                       double maxSpeed,
-                       double perceptionRadius,
-                       double avoidRadius){
+    public BoidManager(double initialSeparationWeight, double initialAlignmentWeight, double initialCohesionWeight, double width, double height, double maxSpeed, double perceptionRadius, double avoidRadius){
         separationWeight = initialSeparationWeight;
         alignmentWeight = initialAlignmentWeight;
         cohesionWeight = initialCohesionWeight;
@@ -38,7 +25,6 @@ public class BoidManager {
         this.perceptionRadius = perceptionRadius;
         this.avoidRadius = avoidRadius;
     	boids = new ArrayList<>();
-        threads = new ArrayList<>();
     }
 
     public void createBoids(int nboids) {
@@ -49,34 +35,12 @@ public class BoidManager {
         }
     }
 
-    public void createThreads(int nboids, Flag flag){
-        int nThreads = Runtime.getRuntime().availableProcessors() + 1;
-        System.out.println(nThreads + " threads running...");
-        Barrier barrier = new Barrier(nThreads);
-        Lock lock = new ReentrantLock();
-        int chunkSize = nboids / nThreads;
-        for (int i = 0; i < nThreads; i++) {
-            int startIndex = i * chunkSize;
-            int endIndex;
-            if(i == nThreads - 1){
-                endIndex= nboids;
-            }else {
-                endIndex = (i + 1) * chunkSize;
-            }
-            threads.add(new BoidThread(boids, new BoidSimulationManager(this), barrier, startIndex, endIndex, flag, lock));
-        }
-    }
-
-    public void resetBoids() {
+    public void deleteBoids() {
         boids.clear();
     }
 
     public List<Boid> getBoids(){
         return boids;
-    }
-
-    public List<BoidThread> getThreads() {
-        return threads;
     }
 
     public double getMinX() {
@@ -138,6 +102,5 @@ public class BoidManager {
     public double getPerceptionRadius() {
         return perceptionRadius;
     }
-
 
 }

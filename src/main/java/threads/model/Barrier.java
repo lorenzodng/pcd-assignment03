@@ -1,6 +1,7 @@
-package multithreading.model;
+package threads.model;
 
 public class Barrier {
+
 	private int numberOfArrived;
 	private final int numberTotal;
 	private int phase= 0;

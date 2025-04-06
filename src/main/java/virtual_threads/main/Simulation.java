@@ -1,9 +1,9 @@
-package multithreading.main;
+package virtual_threads.main;
 
-import multithreading.controller.BoidController;
-import multithreading.model.BoidManager;
-import multithreading.model.Flag;
-import multithreading.view.BoidView;
+import virtual_threads.controller.BoidController;
+import virtual_threads.model.BoidManager;
+import virtual_threads.model.Flag;
+import virtual_threads.view.BoidView;
 
 public class Simulation {
 
@@ -15,15 +15,11 @@ public class Simulation {
     static final double AVOID_RADIUS = 20.0;
 	final static int SCREEN_WIDTH = 900;
 	final static int SCREEN_HEIGHT = 700;
+	public static final int FRAMERATE= 60;
 
     public static void main(String[] args) {
 
-    	var manager = new BoidManager(
-    					SEPARATION_WEIGHT, ALIGNMENT_WEIGHT, COHESION_WEIGHT,
-    					SCREEN_WIDTH, SCREEN_HEIGHT,
-    					MAX_SPEED,
-    					PERCEPTION_RADIUS,
-    					AVOID_RADIUS);
+    	var manager = new BoidManager(SEPARATION_WEIGHT, ALIGNMENT_WEIGHT, COHESION_WEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT, MAX_SPEED, PERCEPTION_RADIUS, AVOID_RADIUS);
 		Flag flag= new Flag();
 		BoidController controller = new BoidController(flag);
 		BoidView view= new BoidView(manager, controller, SCREEN_WIDTH, SCREEN_HEIGHT);

@@ -1,11 +1,9 @@
-package multithreading.controller;
+package threads.controller;
 
-import multithreading.model.Barrier;
-import multithreading.model.Flag;
-import multithreading.model.Boid;
-
+import threads.model.Barrier;
+import threads.model.Flag;
+import threads.model.Boid;
 import java.util.List;
-import java.util.concurrent.locks.Lock;
 
 public class BoidThread extends Thread {
 
@@ -13,18 +11,16 @@ public class BoidThread extends Thread {
     private final Flag flag;
     private final Barrier barrier;
     private final List<Boid> boids;
-    private final Lock lock;
     private final int startIndex;
     private final int endIndex;
 
-    public BoidThread(List<Boid> boids, BoidSimulationManager boidSimulationManager, Barrier barrier, int startIndex, int endIndex, Flag flag, Lock lock) {
+    public BoidThread(List<Boid> boids, BoidSimulationManager boidSimulationManager, Barrier barrier, int startIndex, int endIndex, Flag flag) {
         this.startIndex = startIndex;
         this.endIndex = endIndex;
         this.boids = boids;
         this.boidSimulationManager = boidSimulationManager;
         this.barrier = barrier;
         this.flag= flag;
-        this.lock= lock;
     }
 
     public void run() {
@@ -57,9 +53,5 @@ public class BoidThread extends Thread {
 
     public Flag getFlag() {
         return flag;
-    }
-
-    public Lock getLock() {
-        return lock;
     }
 }

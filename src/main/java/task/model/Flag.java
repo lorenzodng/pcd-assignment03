@@ -1,4 +1,4 @@
-package multithreading.model;
+package task.model;
 
 public class Flag {
 

@@ -1,8 +1,8 @@
-package multithreading.controller;
+package threads.controller;
 
-import multithreading.model.BoidManager;
-import multithreading.model.Flag;
-import multithreading.view.BoidView;
+import threads.model.BoidManager;
+import threads.model.Flag;
+import threads.view.BoidView;
 
 public class BoidController {
 
@@ -12,22 +12,25 @@ public class BoidController {
         this.flag = flag;
     }
 
-    public void startSimulation(BoidView view) {
+    public void start(BoidView view) {
         view.getBoidManager().getThreads().clear();
         view.getBoidManager().createThreads(view.getBoidManager().getBoids().size(), flag);
         for(BoidThread thread: view.getBoidManager().getThreads()){
             thread.getBoidSimulationManager().attachView(view);
             thread.start();
         }
+        System.out.println(view.getBoidManager().getThreads().size() + " threads running...");
     }
 
-    public void stopSimulation() {
+    public void stop() {
         flag.set();
+        System.out.println("Threads terminated, boids active");
     }
 
-    public void resetSimulation(BoidManager boidManager) {
-        boidManager.resetBoids();
+    public void reset(BoidManager boidManager) {
+        boidManager.deleteBoids();
         flag.reset();
+        System.out.println("Threads terminated, boids deleted");
     }
 
 }
