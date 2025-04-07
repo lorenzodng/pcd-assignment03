@@ -19,7 +19,7 @@ public class Simulation {
 
 	public static void main(String[] args) {
 
-    	var manager = new BoidManager(SEPARATION_WEIGHT, ALIGNMENT_WEIGHT, COHESION_WEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT, MAX_SPEED, PERCEPTION_RADIUS, AVOID_RADIUS);
+    	BoidManager manager = new BoidManager(SEPARATION_WEIGHT, ALIGNMENT_WEIGHT, COHESION_WEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT, MAX_SPEED, PERCEPTION_RADIUS, AVOID_RADIUS);
 		Flag flag= new Flag();
 		BoidController controller = new BoidController(flag);
 		BoidView view= new BoidView(manager, controller, SCREEN_WIDTH, SCREEN_HEIGHT);

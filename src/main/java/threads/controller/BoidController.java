@@ -14,7 +14,7 @@ public class BoidController {
 
     public void start(BoidView view) {
         view.getBoidManager().getThreads().clear();
-        view.getBoidManager().createThreads(view.getBoidManager().getBoids().size(), flag);
+        view.getBoidManager().createThreads(flag);
         for(BoidThread thread: view.getBoidManager().getThreads()){
             thread.getBoidSimulationManager().attachView(view);
             thread.start();

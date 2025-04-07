@@ -42,15 +42,15 @@ public class BoidManager {
         }
     }
 
-    public void createThreads(int nboids, Flag flag){
+    public void createThreads(Flag flag){
         int nThreads = Runtime.getRuntime().availableProcessors() + 1;
         Barrier barrier = new Barrier(nThreads);
-        int chunkSize = nboids / nThreads;
+        int chunkSize = boids.size() / nThreads;
         for (int i = 0; i < nThreads; i++) {
             int startIndex = i * chunkSize;
             int endIndex;
             if(i == nThreads - 1){
-                endIndex= nboids;
+                endIndex= boids.size();
             }else {
                 endIndex = (i + 1) * chunkSize;
             }
