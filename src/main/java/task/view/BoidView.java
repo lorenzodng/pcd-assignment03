@@ -46,7 +46,7 @@ public class BoidView extends JFrame implements ChangeListener {
 		cp.add(BorderLayout.SOUTH, slidersPanel);
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.X_AXIS));
-		boidsSpinner = new JSpinner(new SpinnerNumberModel(2000, 1, 5000, 1));
+		boidsSpinner = new JSpinner(new SpinnerNumberModel(2500, 1, 5000, 1));
 		JPanel spinnerPanel = new JPanel();
 		spinnerPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		spinnerPanel.add(new JLabel("Boids:"));
@@ -108,11 +108,8 @@ public class BoidView extends JFrame implements ChangeListener {
 	}
 
 	private void startSimulation(ActionEvent e) {
-		int numBoids = (int) boidsSpinner.getValue();
-		if(getBoidManager().getBoids().isEmpty()){
-			getBoidManager().createBoids(numBoids);
-		}
-		controller.start(this);
+		int nBoids = (int) boidsSpinner.getValue();
+		controller.start(this, nBoids);
 		startButton.setEnabled(false);
 		stopButton.setEnabled(true);
 		resetButton.setEnabled(false);

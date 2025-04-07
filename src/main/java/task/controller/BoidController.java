@@ -15,7 +15,10 @@ public class BoidController {
         this.flag = flag;
     }
 
-    public void start(BoidView view) {
+    public void start(BoidView view, int nBoids) {
+        if(view.getBoidManager().getBoids().isEmpty()){
+            view.getBoidManager().createBoids(nBoids);
+        }
         executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() + 1);
         new ThreadMaster(executor, flag, view).start();
     }

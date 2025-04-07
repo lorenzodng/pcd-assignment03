@@ -108,11 +108,8 @@ public class BoidView extends JFrame implements ChangeListener {
 	}
 
 	private void startSimulation(ActionEvent e) {
-		int numBoids = (int) boidsSpinner.getValue();
-		if(getBoidManager().getBoids().isEmpty()){
-			getBoidManager().createBoids(numBoids);
-		}
-		controller.start(this);
+		int nBoids = (int) boidsSpinner.getValue();
+		controller.start(this, nBoids);
 		startButton.setEnabled(false);
 		stopButton.setEnabled(true);
 		resetButton.setEnabled(false);

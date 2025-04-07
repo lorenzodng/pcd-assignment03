@@ -12,7 +12,10 @@ public class BoidController {
         this.flag = flag;
     }
 
-    public void start(BoidView view) {
+    public void start(BoidView view, int nBoids) {
+        if(view.getBoidManager().getBoids().isEmpty()){
+            view.getBoidManager().createBoids(nBoids);
+        }
         new ThreadMaster(flag, view).start();
     }
 
