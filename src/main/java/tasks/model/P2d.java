@@ -1,4 +1,4 @@
-package task.model;
+package tasks.model;
 
 public record P2d(double x, double y) {
 

@@ -1,8 +1,8 @@
-package task.controller;
+package tasks.controller;
 
-import task.model.Boid;
-import task.model.Flag;
-import task.view.BoidView;
+import tasks.model.Boid;
+import tasks.model.Flag;
+import tasks.view.BoidView;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;

@@ -46,7 +46,7 @@ public class BoidView extends JFrame implements ChangeListener {
 		cp.add(BorderLayout.SOUTH, slidersPanel);
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.X_AXIS));
-		boidsSpinner = new JSpinner(new SpinnerNumberModel(500, 1, 5000, 1));
+		boidsSpinner = new JSpinner(new SpinnerNumberModel(1000, 1, 5000, 1));
 		JPanel spinnerPanel = new JPanel();
 		spinnerPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		spinnerPanel.add(new JLabel("Boids:"));

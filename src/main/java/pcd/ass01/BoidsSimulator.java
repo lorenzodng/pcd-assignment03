@@ -8,7 +8,6 @@ public class BoidsSimulator {
     private Optional<BoidsView> view;
     private static final int FRAMERATE = 60;
     private int framerate;
-    private int countdown= 500;
 
     public BoidsSimulator(BoidsModel model) {
         this.model = model;
@@ -20,8 +19,7 @@ public class BoidsSimulator {
     }
       
     public void runSimulation() {
-        long time1= System.currentTimeMillis();
-    	while (countdown > 0) { //per sempre, durante l'esecuzione...
+    	while (true) { //per sempre, durante l'esecuzione...
             var t0 = System.currentTimeMillis(); //ricavo il tempo in ms
     		var boids = model.getBoids();
 
@@ -52,9 +50,6 @@ public class BoidsSimulator {
                 	framerate = (int) (1000/dtElapsed); //altrimenti aggiorno il framerate
                 }
     		}
-            countdown --;
     	}
-        long time2= System.currentTimeMillis();
-        System.out.print((time2-time1)/1000);
     }
 }

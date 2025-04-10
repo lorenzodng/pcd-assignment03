@@ -1,7 +1,7 @@
-package task.view;
+package tasks.view;
 
-import task.model.Boid;
-import task.model.BoidManager;
+import tasks.model.Boid;
+import tasks.model.BoidManager;
 import javax.swing.*;
 import java.awt.*;
 

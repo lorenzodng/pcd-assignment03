@@ -1,8 +1,8 @@
-package task.controller;
+package tasks.controller;
 
-import task.model.BoidManager;
-import task.model.Flag;
-import task.view.BoidView;
+import tasks.model.BoidManager;
+import tasks.model.Flag;
+import tasks.view.BoidView;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 

@@ -4,16 +4,20 @@ import threads.main.Simulation;
 import threads.model.BoidManager;
 import threads.view.BoidView;
 import java.util.Optional;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class BoidSimulationManager {
 
     private BoidManager boidManager;
     private Optional<BoidView> view;
+    private Lock lock;
     private int framerate;
 
     public BoidSimulationManager(BoidManager boidManager) {
         this.boidManager = boidManager;
         view = Optional.empty();
+        lock= new ReentrantLock();
     }
 
     public void attachView(BoidView view) {
@@ -34,16 +38,20 @@ public class BoidSimulationManager {
             long t1 = System.currentTimeMillis();
             long dtElapsed = t1 - t0;
             if (view.isPresent()) {
-                view.get().update(framerate);
                 long frameratePeriod = 1000 / Simulation.FRAMERATE;
+                lock.lock();
+                view.get().update(framerate);
+                if (dtElapsed < frameratePeriod) {
+                    framerate = Simulation.FRAMERATE;
+                } else {
+                    framerate = (int) (1000 / dtElapsed);
+                }
+                lock.unlock();
                 if (dtElapsed < frameratePeriod) {
                     try {
                         Thread.sleep(frameratePeriod - dtElapsed);
                     } catch (Exception ex) {
                     }
-                    framerate = Simulation.FRAMERATE;
-                } else {
-                    framerate = (int) (1000 / dtElapsed);
                 }
             }
         }

@@ -1,4 +1,4 @@
-package virtual_threads.model;
+package tasks.model;
 
 public class Flag {
 

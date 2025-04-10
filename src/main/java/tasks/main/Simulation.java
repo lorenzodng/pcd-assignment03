@@ -1,9 +1,9 @@
-package task.main;
+package tasks.main;
 
-import task.controller.BoidController;
-import task.model.BoidManager;
-import task.model.Flag;
-import task.view.BoidView;
+import tasks.controller.BoidController;
+import tasks.model.BoidManager;
+import tasks.model.Flag;
+import tasks.view.BoidView;
 
 public class Simulation {
 

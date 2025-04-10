@@ -1,7 +1,7 @@
-package task.view;
+package tasks.view;
 
-import task.controller.BoidController;
-import task.model.BoidManager;
+import tasks.controller.BoidController;
+import tasks.model.BoidManager;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
