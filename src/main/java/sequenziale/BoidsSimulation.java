@@ -1,4 +1,4 @@
-package pcd.ass01;
+package sequenziale;
 
 public class BoidsSimulation {
 
