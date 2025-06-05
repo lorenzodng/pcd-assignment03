@@ -1,8 +1,4 @@
-package actors.model;
-
-import actors.controller.BoidSimulationManager;
-import actors.controller.BoidActor;
-import akka.actor.ActorRef;
+package tasks.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,8 +6,7 @@ import java.util.List;
 public class BoidManager {
     
     private final List<Boid> boids;
-    private final List<ActorRef> actors;
-    private double separationWeight; 
+    private double separationWeight;
     private double alignmentWeight; 
     private double cohesionWeight; 
     private final double width;
@@ -30,7 +25,6 @@ public class BoidManager {
         this.perceptionRadius = perceptionRadius;
         this.avoidRadius = avoidRadius;
     	boids = new ArrayList<>();
-        actors = new ArrayList<>();
     }
 
     public void createBoids(int nboids) {
@@ -47,10 +41,6 @@ public class BoidManager {
 
     public List<Boid> getBoids(){
         return boids;
-    }
-
-    public List<ActorRef> getActors() {
-        return actors;
     }
 
     public double getMinX() {
@@ -112,4 +102,5 @@ public class BoidManager {
     public double getPerceptionRadius() {
         return perceptionRadius;
     }
+
 }

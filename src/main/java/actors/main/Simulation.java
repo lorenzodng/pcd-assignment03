@@ -4,6 +4,7 @@ import actors.controller.BoidController;
 import actors.model.BoidManager;
 import actors.model.Flag;
 import actors.view.BoidView;
+import akka.actor.*;
 
 public class Simulation {
 
@@ -19,10 +20,11 @@ public class Simulation {
 
 	public static void main(String[] args) {
 
-    	BoidManager manager = new BoidManager(SEPARATION_WEIGHT, ALIGNMENT_WEIGHT, COHESION_WEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT, MAX_SPEED, PERCEPTION_RADIUS, AVOID_RADIUS);
+		BoidManager manager= new BoidManager(SEPARATION_WEIGHT, ALIGNMENT_WEIGHT, COHESION_WEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT, MAX_SPEED, PERCEPTION_RADIUS, AVOID_RADIUS);
+		ActorSystem system= ActorSystem.create("boid-simulation");
 		Flag flag= new Flag();
-		BoidController controller = new BoidController(flag);
-		BoidView view= new BoidView(manager, controller, SCREEN_WIDTH, SCREEN_HEIGHT);
+		ActorRef controllerActor= system.actorOf(Props.create(() -> new BoidController(flag)), "actorController");
+		BoidView view= new BoidView(manager, controllerActor, SCREEN_WIDTH, SCREEN_HEIGHT);
 		view.display();
     }
 }

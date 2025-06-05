@@ -25,7 +25,7 @@ public class BoidSimulationManager {
     	this.view = Optional.of(view);
     }
       
-    public void runSimulation(BoidThread thread) throws InterruptedException {
+    public void runSimulation(BoidActor thread) throws InterruptedException {
         thread.getFlag().reset();
         while(!thread.getFlag().isSet()) {
             long t0 = System.currentTimeMillis();

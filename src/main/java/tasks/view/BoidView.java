@@ -1,10 +1,7 @@
-package actors.view;
+package tasks.view;
 
-import actors.controller.BoidController;
-import actors.model.BoidManager;
-import actors.model.MsgProtocol;
-import akka.actor.ActorRef;
-
+import tasks.controller.BoidController;
+import tasks.model.BoidManager;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -20,10 +17,10 @@ public class BoidView extends JFrame implements ChangeListener {
 	private final BoidManager boidManager;
 	private final JButton startButton, stopButton, resetButton;
 	private final int width, height;
-	private final ActorRef controller;
+	private final BoidController controller;
 	private final JFrame frame;
 
-	public BoidView(BoidManager boidManager, ActorRef controller, int width, int height) {
+	public BoidView(BoidManager boidManager, BoidController controller, int width, int height) {
 		this.boidManager = boidManager;
 		this.controller= controller;
 		this.width = width;
@@ -49,7 +46,7 @@ public class BoidView extends JFrame implements ChangeListener {
 		cp.add(BorderLayout.SOUTH, slidersPanel);
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.X_AXIS));
-		boidsSpinner = new JSpinner(new SpinnerNumberModel(1000, 1, 5000, 1));
+		boidsSpinner = new JSpinner(new SpinnerNumberModel(2500, 1, 5000, 1));
 		JPanel spinnerPanel = new JPanel();
 		spinnerPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		spinnerPanel.add(new JLabel("Boids:"));
@@ -112,7 +109,7 @@ public class BoidView extends JFrame implements ChangeListener {
 
 	private void startSimulation(ActionEvent e) {
 		int nBoids = (int) boidsSpinner.getValue();
-		controller.tell(new MsgProtocol.StartMsg(this, nBoids), null);
+		controller.start(this, nBoids);
 		startButton.setEnabled(false);
 		stopButton.setEnabled(true);
 		resetButton.setEnabled(false);
