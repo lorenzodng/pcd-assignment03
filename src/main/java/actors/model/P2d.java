@@ -1,4 +1,4 @@
-package virtual_threads.model;
+package actors.model;
 
 public record P2d(double x, double y) {
 
@@ -15,5 +15,4 @@ public record P2d(double x, double y) {
     public String toString(){
         return "P2d("+x+","+y+")";
     }
-
 }

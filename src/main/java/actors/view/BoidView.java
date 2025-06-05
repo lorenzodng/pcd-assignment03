@@ -1,7 +1,8 @@
-package tasks.view;
+package actors.view;
 
-import tasks.controller.BoidController;
-import tasks.model.BoidManager;
+import actors.controller.BoidController;
+import actors.model.BoidManager;
+
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -46,7 +47,7 @@ public class BoidView extends JFrame implements ChangeListener {
 		cp.add(BorderLayout.SOUTH, slidersPanel);
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.X_AXIS));
-		boidsSpinner = new JSpinner(new SpinnerNumberModel(2500, 1, 5000, 1));
+		boidsSpinner = new JSpinner(new SpinnerNumberModel(1000, 1, 5000, 1));
 		JPanel spinnerPanel = new JPanel();
 		spinnerPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		spinnerPanel.add(new JLabel("Boids:"));

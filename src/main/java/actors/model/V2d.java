@@ -1,4 +1,4 @@
-package tasks.model;
+package actors.model;
 
 public record V2d(double x, double y) {
 
@@ -22,5 +22,4 @@ public record V2d(double x, double y) {
     public String toString(){
         return "V2d("+x+","+y+")";
     }
-
 }

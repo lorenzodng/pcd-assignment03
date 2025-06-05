@@ -1,11 +1,15 @@
-package sequenziale;
+package actors.model;
+
+import actors.controller.BoidSimulationManager;
+import actors.controller.BoidThread;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class BoidsModel {
+public class BoidManager {
     
     private final List<Boid> boids;
+    private final List<BoidThread> threads;
     private double separationWeight; 
     private double alignmentWeight; 
     private double cohesionWeight; 
@@ -14,16 +18,8 @@ public class BoidsModel {
     private final double maxSpeed;
     private final double perceptionRadius;
     private final double avoidRadius;
-    //creo un boid
-    public BoidsModel(int nboids,  
-    						double initialSeparationWeight, 
-    						double initialAlignmentWeight, 
-    						double initialCohesionWeight,
-    						double width, 
-    						double height,
-    						double maxSpeed,
-    						double perceptionRadius,
-    						double avoidRadius){
+
+    public BoidManager(double initialSeparationWeight, double initialAlignmentWeight, double initialCohesionWeight, double width, double height, double maxSpeed, double perceptionRadius, double avoidRadius){
         separationWeight = initialSeparationWeight;
         alignmentWeight = initialAlignmentWeight;
         cohesionWeight = initialCohesionWeight;
@@ -33,16 +29,43 @@ public class BoidsModel {
         this.perceptionRadius = perceptionRadius;
         this.avoidRadius = avoidRadius;
     	boids = new ArrayList<>();
-        for (int i = 0; i < nboids; i++) {
-        	P2d pos = new P2d(-width/2 + Math.random() * width, -height/2 + Math.random() * height); //definisco una posizione casuale per ogni boid all'intenro dell'area definita (width e height)
-        	V2d vel = new V2d(Math.random() * maxSpeed/2 - maxSpeed/4, Math.random() * maxSpeed/2 - maxSpeed/4); //definisco una velocità casuale per ogni boid
-        	boids.add(new Boid(pos, vel)); // creo un nuovo boid con la posizione e la velocità calcolata e lo aggiungo a una lista di boid
-        }
-
+        threads = new ArrayList<>();
     }
 
-    public List<Boid> getBoids() {
+    public void createBoids(int nboids) {
+        for (int i = 0; i < nboids; i++) {
+            P2d pos = new P2d(-width / 2 + Math.random() * width, -height / 2 + Math.random() * height);
+            V2d vel = new V2d(Math.random() * maxSpeed / 2 - maxSpeed / 4, Math.random() * maxSpeed / 2 - maxSpeed / 4);
+            boids.add(new Boid(pos, vel));
+        }
+    }
+
+    public void createThreads(Flag flag){
+        int nThreads = Runtime.getRuntime().availableProcessors() + 1;
+        Barrier barrier = new Barrier(nThreads);
+        int chunkSize = boids.size() / nThreads;
+        for (int i = 0; i < nThreads; i++) {
+            int startIndex = i * chunkSize;
+            int endIndex;
+            if(i == nThreads - 1){
+                endIndex= boids.size();
+            }else {
+                endIndex = (i + 1) * chunkSize;
+            }
+            threads.add(new BoidThread(boids, new BoidSimulationManager(this), barrier, startIndex, endIndex, flag));
+        }
+    }
+
+    public void deleteBoids() {
+        boids.clear();
+    }
+
+    public List<Boid> getBoids(){
         return boids;
+    }
+
+    public List<BoidThread> getThreads() {
+        return threads;
     }
 
     public double getMinX() {
@@ -69,15 +92,15 @@ public class BoidsModel {
         return height;
     }
 
-    public synchronized void setSeparationWeight(double value) {
+    public void setSeparationWeight(double value) {
         this.separationWeight = value;
     }
 
-    public synchronized void setAlignmentWeight(double value) {
+    public void setAlignmentWeight(double value) {
         this.alignmentWeight = value;
     }
 
-    public synchronized void setCohesionWeight(double value) {
+    public void setCohesionWeight(double value) {
         this.cohesionWeight = value;
     }
 

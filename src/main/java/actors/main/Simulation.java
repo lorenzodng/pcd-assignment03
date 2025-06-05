@@ -1,9 +1,9 @@
-package tasks.main;
+package actors.main;
 
-import tasks.controller.BoidController;
-import tasks.model.BoidManager;
-import tasks.model.Flag;
-import tasks.view.BoidView;
+import actors.controller.BoidController;
+import actors.model.BoidManager;
+import actors.model.Flag;
+import actors.view.BoidView;
 
 public class Simulation {
 
@@ -15,9 +15,9 @@ public class Simulation {
     static final double AVOID_RADIUS = 20.0;
 	static final int SCREEN_WIDTH = 900;
 	static final int SCREEN_HEIGHT = 700;
-	public static final int FRAMERATE= 150;
+	public static final int FRAMERATE = 60;
 
-    public static void main(String[] args) {
+	public static void main(String[] args) {
 
     	BoidManager manager = new BoidManager(SEPARATION_WEIGHT, ALIGNMENT_WEIGHT, COHESION_WEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT, MAX_SPEED, PERCEPTION_RADIUS, AVOID_RADIUS);
 		Flag flag= new Flag();
