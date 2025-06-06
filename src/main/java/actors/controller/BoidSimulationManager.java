@@ -1,10 +1,8 @@
 package actors.controller;
 
 import actors.main.Simulation;
-import actors.model.Boid;
 import actors.model.BoidManager;
 import actors.view.BoidView;
-
 import java.util.Optional;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -43,7 +41,7 @@ public class BoidSimulationManager {
         long dtPosition = dtAfter - dtBefore;
         long dtElapsed= dtVelocity + dtPosition;
         if (view.isPresent()) {
-            long frameratePeriod = 1000 / (tasks.main.Simulation.FRAMERATE);
+            long frameratePeriod = 1000 / (Simulation.FRAMERATE);
             lock.lock();
             if (dtElapsed < frameratePeriod) {
                 framerate = Simulation.FRAMERATE;
