@@ -41,6 +41,13 @@ public class ActorMaster extends AbstractActor {
 
     private void createWorkerActors() {
         int nActors= boids.size() / CHUNK_SIZE;
+        int remainder = boids.size() % CHUNK_SIZE;
+        if (nActors < 1) {
+            nActors = 1;
+        }
+        if (remainder >= 30) {
+            nActors++;
+        }
         for (int i = 0; i < nActors; i++) {
             int startIndex = i * CHUNK_SIZE;
             int endIndex;
@@ -53,6 +60,7 @@ public class ActorMaster extends AbstractActor {
             ActorRef actor = getContext().actorOf(props, "workerActor-" + i);
             workerActors.add(actor);
         }
+        System.out.println(workerActors.size()+ " worker actors running");
     }
 
     private void checkVelocityUpdates(MsgProtocol.VelocityDoneMsg msg){

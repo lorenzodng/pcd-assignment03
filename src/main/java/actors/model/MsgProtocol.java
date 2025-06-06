@@ -10,5 +10,4 @@ public interface MsgProtocol {
 	record VelocityDoneMsg() {}
 	record PositionMsg(long dtVelocity) {}
 	record PositionDoneMsg() {}
-
 }
