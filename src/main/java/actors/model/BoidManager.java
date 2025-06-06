@@ -1,9 +1,6 @@
 package actors.model;
 
-import actors.controller.BoidSimulationManager;
-import actors.controller.BoidActor;
 import akka.actor.ActorRef;
-
 import java.util.ArrayList;
 import java.util.List;
 

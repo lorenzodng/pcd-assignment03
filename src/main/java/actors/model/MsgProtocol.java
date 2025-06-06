@@ -8,7 +8,7 @@ public interface MsgProtocol {
 	record ResetMsg (BoidManager boidManager) {}
 	record VelocityMsg() {}
 	record VelocityDoneMsg() {}
-	record PositionMsg() {}
+	record PositionMsg(long dtVelocity) {}
 	record PositionDoneMsg() {}
 
 }

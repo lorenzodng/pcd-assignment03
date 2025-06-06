@@ -1,10 +1,8 @@
 package actors.view;
 
-import actors.controller.BoidController;
 import actors.model.BoidManager;
 import actors.model.MsgProtocol;
 import akka.actor.ActorRef;
-
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -120,7 +118,7 @@ public class BoidView extends JFrame implements ChangeListener {
 	}
 
 	private void stopSimulation(ActionEvent e) {
-		controller.stop();
+		controller.tell(new MsgProtocol.StopMsg(), null);
 		startButton.setEnabled(true);
 		stopButton.setEnabled(false);
 		resetButton.setEnabled(true);
@@ -128,8 +126,8 @@ public class BoidView extends JFrame implements ChangeListener {
 	}
 
 	private void resetSimulation(ActionEvent e) {
-		controller.reset(getBoidManager());
 		boidsPanel.repaint();
+		controller.tell(new MsgProtocol.ResetMsg(boidManager), null);
 		boidsSpinner.setEnabled(true);
 	}
 
